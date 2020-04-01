@@ -35,7 +35,11 @@ class PatchDataloader:
 		self.__version_info.append({
 			'args': copy.deepcopy(bound.args),
 			'kwargs': copy.deepcopy(bound.kwargs),
-			'hash_value': dl.hash_value
+			'setting_hash': dl.get_setting_hash(),
+			'vocab_hash': dl.get_vocab_hash(),
+			"raw_data_hash": dl.get_raw_data_hash(),
+			"data_hash": dl.get_data_hash(),
+			"general_hash": dl.get_general_hash()
 		})
 		return dl
 
@@ -72,6 +76,7 @@ def base_test_version(dl_class):
 		assert 'vocab_hash' in dic
 		assert 'raw_data_hash' in dic
 		assert 'data_hash' in dic
+		assert 'general_hash' in dic
 		
 		assert 'args' in dic
 		assert 'kwargs' in dic
@@ -79,7 +84,8 @@ def base_test_version(dl_class):
 		args = dic['args']
 		kwargs = dic['kwargs']
 		dl = dl_class(*args, **kwargs)
-		assert dic['setting_hash'] == dl._setting_hash
-		assert dic['vocab_hash'] == dl._vocab_hash
-		assert dic['raw_data_hash'] == dl._raw_data_hash
-		assert dic['data_hash'] == dl._data_hash
+		assert dic['setting_hash'] == dl.get_setting_hash()
+		assert dic['vocab_hash'] == dl.get_vocab_hash()
+		assert dic['raw_data_hash'] == dl.get_raw_data_hash()
+		assert dic['data_hash'] == dl.get_data_hash()
+		assert dic['general_hash'] == dl.get_general_hash()
