@@ -207,13 +207,22 @@ class LoadClassInterface:
 						class_name, inspect.getfile(result), inspect.getfile(subclass)))
 		return result
 
+def fix_doc(doc, cls):
+	cls_str = cls.__name__
+	cls_dict = {"Sentence": "get_default_field", "Vocab": "get_default_vocab"}
+	if cls_str in cls_dict:
+		add_doc_str = '''Wrapper of the identical function of ``{}``'s instance: ``{}`` obtained by ``self.{}``. '''.format(cls_str, cls_str.lower(), cls_dict[cls_str])
+		tmp_doc = doc.replace("self.", cls_str.lower() + ".")
+		return add_doc_str + tmp_doc
+	return doc
+
 def copy_func(target, cls, method_name):
 	method = getattr(cls, method_name)
 	assert callable(method)
 	@wraps(method)
 	def new_method(self, *args, **kwargs):
 		return getattr(target(self), method_name)(*args, **kwargs)
-	new_method.__doc__ = cls.META_DOC_FOR_ATTRIBUTES[method_name] # type: ignore
+	new_method.__doc__ = fix_doc(cls.META_DOC_FOR_ATTRIBUTES[method_name], cls) # type: ignore
 	return new_method
 
 def copy_property(target, cls, old_property_name):
