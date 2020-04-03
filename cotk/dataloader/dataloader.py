@@ -563,8 +563,9 @@ class LanguageProcessing(Dataloader):
 		return res
 
 	# copy some functions from vocab
-	_VOCAB_MORE_DOCSTRING = '''It calls the method of the identical name in the :class:`Vocab` instance,\
-		from :meth:`.get_default_vocab()`.'''
+	_VOCAB_MORE_DOCSTRING = ""
+	#_VOCAB_MORE_DOCSTRING = '''It calls the method of the identical name in the :class:`Vocab` instance,\
+	#	from :meth:`.get_default_vocab()`.'''
 	frequent_vocab_size = copy_property(get_default_vocab, Vocab, "frequent_vocab_size")
 	all_vocab_size = copy_property(get_default_vocab, Vocab, "all_vocab_size")
 	frequent_vocab_list = copy_property(get_default_vocab, Vocab, "frequent_vocab_list")
@@ -576,15 +577,16 @@ class LanguageProcessing(Dataloader):
 	go_id = copy_property(get_default_vocab, Vocab, "go_id")
 	eos_id = copy_property(get_default_vocab, Vocab, "eos_id")
 
-	_SENTENCE_MORE_DOCSTRING = '''It calls the method of the identical name in the :class:`Sentence` instance,\
-		from :meth:`.get_default_field()`.'''
+	_SENTENCE_MORE_DOCSTRING = ""
+	#_SENTENCE_MORE_DOCSTRING = '''It calls the method of the identical name in the :class:`Sentence` instance,\
+	#	from :meth:`.get_default_field()`.'''
 	tokenize = copy_func(get_default_field, Sentence, "tokenize")
-	tokenize_sentences = copy_func(get_default_field, Sentence, "tokenize_sentences")
+	tokenize_sentences = copy_func(get_default_field, Sentence, "tokenize_sentences") # TODO
 	convert_tokens_to_ids = copy_func(get_default_field, Sentence, "convert_tokens_to_ids")
 	convert_ids_to_tokens = copy_func(get_default_field, Sentence, "convert_ids_to_tokens")
 	convert_ids_to_sentence = copy_func(get_default_field, Sentence, "convert_ids_to_sentence")
 	convert_sentence_to_ids = copy_func(get_default_field, Sentence, "convert_sentence_to_ids")
 	add_special_to_ids = copy_func(get_default_field, Sentence, "add_special_to_ids")
 	remove_special_in_ids = copy_func(get_default_field, Sentence, "remove_special_in_ids")
-	process_sentences = copy_func(get_default_field, Sentence, "process_sentences")
+	process_sentences = copy_func(get_default_field, Sentence, "process_sentences") # TODO
 	trim_in_ids = copy_func(get_default_field, Sentence, "trim_in_ids")

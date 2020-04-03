@@ -6,6 +6,7 @@ from ..hooks import hooks
 from .dataloader import LanguageProcessing
 from .context import FieldContext
 from .vocab import GeneralVocab
+from ..metric.metric import MetricBase
 
 if False: # for type check # pylint: disable=using-constant-test
 	from ..metric import MetricChain #pylint: disable=unused-import
@@ -62,6 +63,7 @@ class SentenceClassification(LanguageProcessing):
 		'''
 		return super().get_batch(set_name, indexes)
 
+	PREDICTION_KEY_ARGUMENTS = MetricBase.PREDICTION_KEY_ARGUMENTS
 	def get_metric(self, prediction_key="prediction"):
 		'''Get metrics for accuracy. In other words, this function
 		provides metrics for sentence classification task.
@@ -71,8 +73,7 @@ class SentenceClassification(LanguageProcessing):
 			* :class:`.metric.AccuracyMetric`
 
 		Arguments:
-			prediction_key (str): The key of prediction over sentences.
-				Refer to :class:`.metric.AccuracyMetric`. Default: ``prediction``.
+			{PREDICTION_KEY_ARGUMENTS}
 
 		Returns:
 			A :class:`.metric.MetricChain` object.

@@ -17,6 +17,7 @@ from .dataloader import LanguageProcessing
 from .tokenizer import PretrainedTokenizer
 from .vocab import PretrainedVocab
 from .context import FieldContext, VocabContext
+from ..metric.metric import MetricBase
 
 if False: # for type check # pylint: disable=using-constant-test
 	from ..metric import MetricChain #pylint: disable=unused-import
@@ -117,6 +118,8 @@ class SingleTurnDialog(LanguageProcessing):
 			) -> Dict[str, Any]:
 		return super().get_batch(set_name, indexes)
 
+	GEN_LOG_PROB_KEY_ARGUMENTS = MetricBase.GEN_LOG_PROB_KEY_ARGUMENTS
+	GENERATE_RARE_VOCAB_ARGUMENTS = MetricBase.GENERATE_RARE_VOCAB_ARGUMENTS
 	def get_teacher_forcing_metric(self, gen_log_prob_key="gen_log_prob",\
 					   generate_rare_vocab=False) -> "MetricChain":
 		'''Get metrics for teacher-forcing.
@@ -126,10 +129,8 @@ class SingleTurnDialog(LanguageProcessing):
 		* :class:`.metric.PerplexityMetric`
 
 		Arguments:
-			gen_log_prob_key (str):  The key of predicted log probability over words.
-				Refer to :class:`.metric.PerplexityMetric`. Default: ``gen_log_prob``.
-			generate_rare_vocab (bool): Whether ``gen_log_prob`` contains invalid vocab.
-				Refer to :class:`.metric.PerplexityMetric`. Default: ``False``.
+			{GEN_LOG_PROB_KEY_ARGUMENTS}
+			{GENERATE_RARE_VOCAB_ARGUMENTS}
 		'''
 		from ..metric import MetricChain, PerplexityMetric
 		metric = MetricChain()
@@ -140,6 +141,7 @@ class SingleTurnDialog(LanguageProcessing):
 			generate_rare_vocab=generate_rare_vocab))
 		return metric
 
+	GEN_KEY_ARGUMENTS = MetricBase.GEN_KEY_ARGUMENTS
 	def get_inference_metric(self, gen_key="gen") -> "MetricChain":
 		'''Get metrics for inference.
 
@@ -149,9 +151,7 @@ class SingleTurnDialog(LanguageProcessing):
 		* :class:`.metric.SingleTurnDialogRecorder`
 
 		Arguments:
-			gen_key (str): The key of generated sentences in index form.
-				Refer to :class:`.metric.BleuCorpusMetric` or
-				:class:`.metric.SingleTurnDialogRecorder`. Default: ``gen``.
+			{GEN_KEY_ARGUMENTS}
 		'''
 		from ..metric import MetricChain, BleuCorpusMetric, SingleTurnDialogRecorder
 		metric = MetricChain()

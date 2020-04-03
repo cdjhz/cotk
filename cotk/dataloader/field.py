@@ -323,7 +323,7 @@ class Sentence(Field):
 
 	_SENTENCE_MORE_DOCSTRING = ""
 	def tokenize_sentences(self, sentences: List[str]) -> List[List[str]]:
-		'''Tokenize sentences and convert them to lower case if ``convert_to_lower_letter`` is ``True``.
+		'''Tokenize sentences and convert them to lower case if ``self.convert_to_lower_letter`` is ``True``.
 		{_SENTENCE_MORE_DOCSTRING}
 
 		Arguments:
@@ -336,7 +336,7 @@ class Sentence(Field):
 			return tokenized_sentences
 
 	def tokenize(self, sentence: str) -> List[str]:
-		'''Tokenize sentence and convert it to lower case if ``convert_to_lower_letter`` is ``True``.
+		'''Tokenize sentence and convert it to lower case if ``self.convert_to_lower_letter`` is ``True``.
 		{_SENTENCE_MORE_DOCSTRING}
 
 		Arguments:
@@ -422,9 +422,7 @@ class Sentence(Field):
 
 		* If sentences haven't been tokenized, tokenize them by invoking :meth:`Sentence.tokenize_sentences`.
 		* Then, convert the list of tokens to a list of ids.
-		* If ``max_sent_length`` is not ``None`` and ``cut`` is ``True``,
-		  sentences, whose length are more than ``self.max_sent_length``, are
-		  shorten to first ``max_sent_length`` tokens.
+		* If ``self.max_sent_length`` is not ``None`` and ``cut`` is ``True``, sentences with length longer than ``self.max_sent_length`` are truncated to first ``self.max_sent_length`` tokens.
 
 		{_SENTENCE_MORE_DOCSTRING}
 

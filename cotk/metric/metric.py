@@ -105,6 +105,9 @@ class MetricBase(LoadClassInterface, metaclass=DocStringInheritor):
 	GEN_LOG_PROB_KEY_ARGUMENTS = \
 		"""gen_log_prob_key (str, optional): The key of predicted **log** probability over words. \
 			Default: ``gen_log_prob``."""
+	MULTI_TURN_GEN_LOG_PROB_KEY_ARGUMENTS = \
+		"""multi_turn_gen_log_prob_key (str, optional): The key of predicted **log** probability over words. \
+			Refer to :class:`.metric.MultiTurnPerplexityMetric`. Default: ``multi_turn_gen_log_prob``."""
 	GENERATE_RARE_VOCAB_ARGUMENTS = \
 		"""generate_rare_vocab (bool, optional): Whether ``gen_log_prob`` contains :ref:`invalid vocab <vocabulary_ref>`. \
 			Default: ``False``."""

@@ -12,6 +12,7 @@ from .tokenizer import SimpleTokenizer
 from .vocab import GeneralVocab
 from .context import FieldContext
 from ..wordvector import Glove
+from ..metric.metric import MetricBase
 
 if False: # for type check # pylint: disable=using-constant-test
 	from ..metric import MetricChain #pylint: disable=unused-import
@@ -84,7 +85,7 @@ class MultiTurnDialog(LanguageProcessing):
 	convert_multi_turn_tokens_to_ids = copy_func(LanguageProcessing.get_default_field, Session, 'convert_multi_turn_tokens_to_ids')
 	convert_multi_turn_ids_to_tokens = copy_func(LanguageProcessing.get_default_field, Session, 'convert_multi_turn_ids_to_tokens')
 
-
+	MULTI_TURN_GEN_LOG_PROB_KEY_ARGUMENTS = MetricBase.MULTI_TURN_GEN_LOG_PROB_KEY_ARGUMENTS
 	def get_teacher_forcing_metric(self, multi_turn_gen_log_prob_key="multi_turn_gen_log_prob"):
 		'''Get metric for teacher-forcing.
 
@@ -93,8 +94,7 @@ class MultiTurnDialog(LanguageProcessing):
 		* :class:`.metric.MultiTurnPerplexityMetric`
 
 		Arguments:
-			gen_log_prob_key (str): The key of predicted log probability over words.
-				Refer to :class:`.metric.MultiTurnPerplexityMetric`. Default: ``gen_log_prob``.
+			{MULTI_TURN_GEN_LOG_PROB_KEY_ARGUMENTS}
 
 		Returns:
 			A :class:`.metric.MetricChain` object.
@@ -107,6 +107,7 @@ class MultiTurnDialog(LanguageProcessing):
 			multi_turn_reference_allvocabs_key="sent_allvocabs"))
 		return metric
 
+	MULTI_TURN_GEN_KEY_ARGUMENTS = MetricBase.MULTI_TURN_GEN_KEY_ARGUMENTS
 	def get_inference_metric(self, multi_turn_gen_key="multi_turn_gen"):
 		'''Get metric for inference.
 
@@ -116,9 +117,7 @@ class MultiTurnDialog(LanguageProcessing):
 		* :class:`.metric.MultiTurnDialogRecorder`
 
 		Arguments:
-			gen_key (str): The key of generated sentences in index form.
-				Refer to :class:`.metric.BleuCorpusMetric` or :class:`.metric.MultiTurnDialogRecorder`.
-				Default: ``gen``.
+			{MULTI_TURN_GEN_KEY_ARGUMENTS}
 
 		Returns:
 			A :class:`.metric.MetricChain` object.
